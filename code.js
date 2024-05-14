@@ -32,10 +32,28 @@ const gameBoard = (function() {
     } 
     const columns = document.querySelectorAll('.column');
     let i = 0;
+    let j = 0;
     columns.forEach((column) => {
         column.dataset.box = i++;
         console.log('add data');
     })
+    i = 0;
+    const renderArray = () => {
+        columns.forEach(column => {
+            console.log(i,j);
+            
+            column.textContent = gameboard.board[i][j++];
+            
+            if(j === 3) {
+                i++;
+            }
+
+            if (j===3) {
+                j = 0;
+            }
+        })
+    }
+    return {renderArray};
 })();
 
 function game (board) {
@@ -77,4 +95,4 @@ function game (board) {
 }
 
 console.log(game(gameboard.board));
-// gameBoard();
+gameBoard.renderArray();
