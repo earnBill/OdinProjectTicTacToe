@@ -1,3 +1,5 @@
+const container = document.querySelector('.container');
+
 let gameboard = {
     board: [['O','X','X'],
             ['O','X','O'],
@@ -14,9 +16,27 @@ function createUser (name) {
     winner = {name};
 }
 
-function gameBoard() {
+const gameBoard = (function() {
+    
+    console.log('run');
+    for (let i = 0; i < 3; i++) {
+        const row = document.createElement('div');
+        container.appendChild(row).classList = 'row';
+        console.log('add row');
 
-}
+        for (let j = 0; j < 3; j++) {
+            const column = document.createElement('div');
+            row.appendChild(column).classList = 'column';
+            console.log('add column');
+        }        
+    } 
+    const columns = document.querySelectorAll('.column');
+    let i = 0;
+    columns.forEach((column) => {
+        column.dataset.box = i++;
+        console.log('add data');
+    })
+})();
 
 function game (board) {
     let winner;
@@ -57,3 +77,4 @@ function game (board) {
 }
 
 console.log(game(gameboard.board));
+// gameBoard();
