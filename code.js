@@ -1,9 +1,11 @@
 const container = document.querySelector('.container');
+const winMsg = document.querySelector('h2');
+
 
 let gameboard = {
-    board: [['O','X','X'],
-            ['O','X','O'],
-            ['X','O','X']]
+    board: [['','',''],
+            ['','',''],
+            ['','','']]
 };
 
 console.log(gameboard.board[0][2])
@@ -15,6 +17,8 @@ let player2 = createUser('bill');
 function createUser (name) {
     winner = {name};
 }
+
+
 
 const gameBoard = (function() {
     
@@ -38,8 +42,10 @@ const gameBoard = (function() {
         console.log('add data');
     })
     i = 0;
+
     const renderArray = () => {
         columns.forEach(column => {
+           
             console.log(i,j);
             
             column.textContent = gameboard.board[i][j++];
@@ -48,15 +54,36 @@ const gameBoard = (function() {
                 i++;
             }
 
-            if (j===3) {
+            if (j === 3) {
                 j = 0;
+            }
+
+            if (i === 3) {
+                i = 0;
             }
         })
     }
-    return {renderArray};
+
+    let mark;
+
+    const addMark = () => {
+        if(!mark) {
+            mark = 'X';
+        }
+        else if(mark==='X') {
+            mark = 'O';
+        }
+        else if (mark === 'O') {
+            mark = 'X'
+        }
+        console.log(mark);
+        return mark;
+    }
+    return {renderArray, addMark};
+
 })();
 
-function game (board) {
+function checkGame (board) {
     let winner;
 
     if (board[0][0] === board[0][1] && board[0][0] === board[0][2]) {
@@ -83,16 +110,57 @@ function game (board) {
     else if (board[0][2] === board[1][1] && board[0][2] === board[2][0]) {
         winner = board[0][2];
     }
-    else {
+    else if (board[0][0] && board[0][1] && board[0][2] && board[1][0] && 
+             board[1][1] && board[1][2] && board[2][0] && board[2][1] && 
+             board[2][2] ){
+                
+        winMsg.textContent = 'Draw!!!'
         return 'Draw!!!';
     }
     if (winner === 'X') {
+        winMsg.textContent = 'Player X wins';
         return `Player X wins`;
     }
-    else {
+    else if (winner === 'O') {
+        winMsg.textContent = 'Player O wins';
         return `Player O wins`;
     }
 }
 
-console.log(game(gameboard.board));
-gameBoard.renderArray();
+const columns = document.querySelectorAll('.column');
+
+columns.forEach((box) => {
+    box.addEventListener('click',()=> {
+
+        if (box.dataset.box === '0' && box.textContent === '') {
+            gameboard.board[0][0] = gameBoard.addMark();
+        }
+        else if (box.dataset.box === '1' && box.textContent === '') {
+            gameboard.board[0][1] = gameBoard.addMark();
+        }
+        else if (box.dataset.box === '2' && box.textContent === '') {
+            gameboard.board[0][2] = gameBoard.addMark();
+        }
+        else if (box.dataset.box === '3' && box.textContent === '') {
+            gameboard.board[1][0] = gameBoard.addMark();
+        }
+        else if (box.dataset.box === '4' && box.textContent === '') {
+            gameboard.board[1][1] = gameBoard.addMark();
+        }
+        else if (box.dataset.box === '5' && box.textContent === '') {
+            gameboard.board[1][2] = gameBoard.addMark();
+        }
+        else if (box.dataset.box === '6' && box.textContent === '') {
+            gameboard.board[2][0] = gameBoard.addMark();
+        }
+        else if (box.dataset.box === '7' && box.textContent === '') {
+            gameboard.board[2][1] = gameBoard.addMark();
+        }
+        else if (box.dataset.box === '8' && box.textContent === '') {
+            gameboard.board[2][2] = gameBoard.addMark();
+        }
+        console.log('click');
+        gameBoard.renderArray();
+        console.log(checkGame(gameboard.board));
+    })
+})
