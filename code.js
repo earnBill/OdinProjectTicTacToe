@@ -4,6 +4,7 @@ const player1Name = document.querySelector('#player1-name');
 const player2Name = document.querySelector('#player2-name');
 const startBtn = document.querySelector('.start-btn');
 const startContainer = document.querySelector('.start-container');
+const playAgainBtn = document.querySelector('.play-again-btn')
 
 let gameboard = {
     board: [['','',''],
@@ -19,6 +20,16 @@ let player2;
 function createUser (name) {
     return {name};
 }
+
+playAgainBtn.addEventListener('click',  function playAgain () {
+    gameboard.board = [['','',''],
+                       ['','',''],
+                       ['','','']];
+    winMsg.textContent = '';
+    gameBoard.renderArray();
+    disableMark = false;
+    playAgainBtn.style.display = 'none';
+});
 
 startBtn.addEventListener('click',() => {
     player1 = createUser(player1Name.value);
@@ -38,6 +49,7 @@ const gameBoard = (function() {
     console.log('run');
     
     const startGame = () => {
+      container.style.display = 'flex';  
       for (let i = 0; i < 3; i++) {
           const row = document.createElement('div');
           container.appendChild(row).classList = 'row';
@@ -142,17 +154,20 @@ function checkGame (board) {
              board[2][2] ){
                 
         winMsg.textContent = 'Draw!!!'
+        playAgainBtn.style.display = "block";
         return 'Draw!!!';
     }
     if (winner === 'X') {
         winMsg.textContent = `${player1.name} X wins`;
+        playAgainBtn.style.display = "block";
         return `Player X wins`;
     }
     else if (winner === 'O') {
         winMsg.textContent = `${player2.name} O wins`;
+        playAgainBtn.style.display = "block";
         return `Player O wins`;
     }
-
+    
 }
 
 let disableMark = false;
