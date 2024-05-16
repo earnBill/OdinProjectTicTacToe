@@ -2,6 +2,20 @@
     box-sizing: border-box;
 }
 
+.start-container {
+    margin: auto;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+.player-names {
+    margin: 5px;
+}
+.start-btn {
+    width: 100px;
+}
 .container {
     margin: auto;
     display: flex;
