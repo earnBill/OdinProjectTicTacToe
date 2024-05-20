@@ -79,7 +79,7 @@ const gameBoard = (function() {
         const columns = document.querySelectorAll('.column');
         columns.forEach(column => {
            
-            console.log(i,j);
+            // console.log(i,j);
             
             column.textContent = gameboard.board[i][j++];
             
@@ -124,30 +124,38 @@ const gameBoard = (function() {
 
 function checkGame (board) {
     let winner;
-
-    if (board[0][0] === board[0][1] && board[0][0] === board[0][2]) {
+    
+    if (board[0][0] === board[0][1] && board[0][0] === board[0][2] && board[0][0]) {
         winner = board[0][0];
+        console.log('1');
     }
-    else if (board[1][0] === board[1][1] && board[1][0] === board[1][2]) {
+    else if (board[1][0] === board[1][1] && board[1][0] === board[1][2] && board[1][0]) {
         winner = board[1][0];
+        console.log('2');
     }
-    else if (board[2][0] === board[2][1] && board[2][0] === board[2][2]) {       
+    else if (board[2][0] === board[2][1] && board[2][0] === board[2][2] && board[2][0]) {       
         winner = board[2][0];
+        console.log('3');
     }
-    else if (board[0][0] === board[1][0] && board[0][0] === board[2][0]) {
+    else if (board[0][0] === board[1][0] && board[0][0] === board[2][0] && board[0][0]) {
         winner = board[0][0];
+        console.log('4');
     }
-    else if (board[0][1] === board[1][1] && board[0][1] === board[2][1]) {
+    else if (board[0][1] === board[1][1] && board[0][1] === board[2][1] && board[0][1]) {
         winner = board[0][1];
+        console.log('5');
     }
-    else if (board[0][2] === board[1][2] && board[0][2] === board[2][2]) {
-        winner = board[0][2]; 
-    }
-    else if (board[0][0] === board[1][1] && board[0][0] === board[2][2]) {
-        winner = board[0][0];
-    }
-    else if (board[0][2] === board[1][1] && board[0][2] === board[2][0]) {
+    else if (board[0][2] === board[1][2] && board[0][2] === board[2][2] && board[0][2]) {
         winner = board[0][2];
+        console.log('6'); 
+    }
+    else if (board[0][0] === board[1][1] && board[0][0] === board[2][2] && board[0][0]) {
+        winner = board[0][0];
+        console.log('7');
+    }
+    else if (board[0][2] === board[1][1] && board[0][2] === board[2][0] && board[0][2]) {
+        winner = board[0][2];
+        console.log('7');
     }
     else if (board[0][0] && board[0][1] && board[0][2] && board[1][0] && 
              board[1][1] && board[1][2] && board[2][0] && board[2][1] && 
@@ -155,18 +163,27 @@ function checkGame (board) {
                 
         winMsg.textContent = 'Draw!!!'
         playAgainBtn.style.display = "block";
+        console.log('8');
         return 'Draw!!!';
     }
+    else {
+        console.log('akyrooooooooooo')
+    }
+    console.log("winner" + winner);
+
     if (winner === 'X') {
         winMsg.textContent = `${player1.name} X wins`;
         playAgainBtn.style.display = "block";
         return `Player X wins`;
     }
+
     else if (winner === 'O') {
         winMsg.textContent = `${player2.name} O wins`;
         playAgainBtn.style.display = "block";
         return `Player O wins`;
     }
+
+    console.log('check');
     
 }
 
