@@ -1,10 +1,12 @@
 const container = document.querySelector('.container');
-const winMsg = document.querySelector('h2');
+const winMsg = document.querySelector('.winner');
 const player1Name = document.querySelector('#player1-name');
 const player2Name = document.querySelector('#player2-name');
 const startBtn = document.querySelector('.start-btn');
 const startContainer = document.querySelector('.start-container');
 const playAgainBtn = document.querySelector('.play-again-btn')
+const score = document.querySelector('.score');
+const score2 = document.querySelector('.score2');
 
 let gameboard = {
     board: [['','',''],
@@ -15,13 +17,17 @@ let gameboard = {
 
 let player1;
 let player2;
+let disableMark = false;
 
 
-function createUser (name) {
-    return {name};
-}
+function createUser (name, score) {
+    const increaseScore = () => score++;
+    const getScore = () => score;
+    return { name, increaseScore, getScore };
+};
 
-playAgainBtn.addEventListener('click',  function playAgain () {
+playAgainBtn.addEventListener('click',  function () {
+    
     gameboard.board = [['','',''],
                        ['','',''],
                        ['','','']];
@@ -29,11 +35,12 @@ playAgainBtn.addEventListener('click',  function playAgain () {
     gameBoard.renderArray();
     disableMark = false;
     playAgainBtn.style.display = 'none';
+
 });
 
 startBtn.addEventListener('click',() => {
-    player1 = createUser(player1Name.value);
-    player2 = createUser(player2Name.value);
+    player1 = createUser(player1Name.value, 0);
+    player2 = createUser(player2Name.value, 0);
     console.log(player1.name);
     console.log(player2.name);
 
@@ -41,6 +48,7 @@ startBtn.addEventListener('click',() => {
     gameBoard.startGame();
     gameBoard.addData();
     play();
+    score.textContent = `${player1.name}  VS ${player2.name} `;
 })
 
 
@@ -171,23 +179,27 @@ function checkGame (board) {
     }
     console.log("winner" + winner);
 
-    if (winner === 'X') {
+    if (winner === 'X' && !disableMark) {
+        player1.increaseScore();
         winMsg.textContent = `${player1.name} X wins`;
         playAgainBtn.style.display = "block";
+        
+        score2.textContent = `${player1.getScore()} : ${player2.getScore()}`;
+        endGame = true;
         return `Player X wins`;
     }
 
-    else if (winner === 'O') {
+    else if (winner === 'O' && !disableMark) {
+        player2.increaseScore();
         winMsg.textContent = `${player2.name} O wins`;
         playAgainBtn.style.display = "block";
+        
+        score2.textContent = `${player1.getScore()} : ${player2.getScore()}`;
         return `Player O wins`;
     }
 
     console.log('check');
-    
 }
-
-let disableMark = false;
 
 function play() {
   const columns = document.querySelectorAll('.column');
