@@ -239,7 +239,9 @@ function play() {
         }
         console.log('click');
         gameBoard.renderArray();
-        gameBoard.playerPlay();
+        if (!disableMark) {
+            gameBoard.playerPlay();
+        }
         if (checkGame(gameboard.board)) {
             disableMark = true;
         };
