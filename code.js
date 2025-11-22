@@ -7,6 +7,7 @@ const startContainer = document.querySelector('.start-container');
 const playAgainBtn = document.querySelector('.play-again-btn')
 const score = document.querySelector('.score');
 const score2 = document.querySelector('.score2');
+const whoPlay = document.querySelector('.who-play');
 
 let gameboard = {
     board: [['','',''],
@@ -69,6 +70,7 @@ const gameBoard = (function() {
               console.log('add column');
             }        
       }
+      whoPlay.textContent = player1.name + " Plays"; 
     }
     
     const addData = () => {
@@ -80,15 +82,11 @@ const gameBoard = (function() {
     })
     }
 
-
     const renderArray = () => {
         let i = 0;
         let j = 0;
         const columns = document.querySelectorAll('.column');
         columns.forEach(column => {
-           
-            // console.log(i,j);
-            
             column.textContent = gameboard.board[i][j++];
             
             if(j === 3) {
@@ -116,17 +114,22 @@ const gameBoard = (function() {
         }
         else if (mark === 'O') {
             mark = 'X'
+            console.log(player1.name);
         }
         console.log(mark);
         return mark;
     }
     
-
-    const playerScore = function (player1, player2) {
-
+    const playerPlay = function () {
+        if(whoPlay.textContent === (player1.name + " Plays")) {
+            whoPlay.textContent = player2.name + " Plays";
+        } else {
+            whoPlay.textContent = player1.name + " Plays";
+        }
+        
     }
 
-    return {renderArray, startGame, addMark, addData};
+    return {renderArray, startGame, addMark, addData, playerPlay};
 
 })();
 
@@ -236,6 +239,7 @@ function play() {
         }
         console.log('click');
         gameBoard.renderArray();
+        gameBoard.playerPlay();
         if (checkGame(gameboard.board)) {
             disableMark = true;
         };
